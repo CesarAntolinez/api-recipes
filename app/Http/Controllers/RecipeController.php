@@ -13,7 +13,9 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        return RecipeCollection::collection(Recipe::all());
+        $recipes = Recipe::query()->with(['category', 'tags'])->get();
+
+        return new RecipeCollection($recipes);
     }
 
     /**
