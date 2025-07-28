@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,8 +24,8 @@ class RecipeFactory extends Factory
             'preparation' => $this->faker->realText(),
             // 'image' => $this->faker,
             // 'published_at' => $this->faker->dateTime(),
-            // 'user_id' => $this->faker,
-            // 'category_id' => $this->faker
+            'user_id' => $this->faker->numberBetween(1, 10),
+            'category_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

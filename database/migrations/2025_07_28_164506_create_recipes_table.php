@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('ingredients')->nullable();
             $table->text('preparation')->nullable();
-            $table->string('image', 100);
+            $table->string('image', 100)->nullable();
             $table->dateTime('published_at')->nullable();
             $table->string('slug')->unique()->nullable();
 
