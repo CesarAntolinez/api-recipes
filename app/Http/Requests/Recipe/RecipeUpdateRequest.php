@@ -11,7 +11,7 @@ class RecipeUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class RecipeUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:100|string',
+            'description' => 'required|string',
+            'ingredients' => 'required|string',
+            'preparation' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'published_at' => 'required|datetime',
+            'slug' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
+            'tags' => 'required|array',
+            'tags.*' => 'required|exists:tags,id',
         ];
     }
 }

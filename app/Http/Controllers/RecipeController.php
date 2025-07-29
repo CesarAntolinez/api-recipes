@@ -13,7 +13,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::query()->with(['category', 'tags'])->get();
+        $recipes = Recipe::query()->with(['category', 'tags', 'user'])->get();
 
         return new RecipeCollection($recipes);
     }
@@ -25,6 +25,9 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::create($request->validated());
 
+        if ($request->exists('tags'))
+            $recipe->tags()->attach($request->tags);
+
         return new RecipeResource($recipe);
     }
 
@@ -33,6 +36,8 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
+        $recipe->load(['category', 'tags', 'user']);
+
         return new RecipeResource($recipe);
     }
 
@@ -42,6 +47,9 @@ class RecipeController extends Controller
     public function update(RecipeUpdateRequest $request, Recipe $recipe)
     {
         $recipe->update($request->validated());
+
+        if ($request->exists('tags'))
+            $recipe->tags()->sync($request->tags);
 
         return new RecipeResource($recipe);
     }

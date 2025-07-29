@@ -31,6 +31,8 @@ class RecipeStoreRequest extends FormRequest
             'slug' => 'required|string',
             'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
+            'tags' => 'required|array',
+            'tags.*' => 'required|exists:tags,id',
         ];
     }
 }
