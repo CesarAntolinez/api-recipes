@@ -16,7 +16,7 @@ class RecipeResource extends JsonResource
     {
         return [
             'id' => $request->id,
-            'type' => 'tags',
+            'type' => 'recipes',
             'attributes' => [
                 'title' => $request->title,
                 'description' => $request->description,
@@ -25,9 +25,9 @@ class RecipeResource extends JsonResource
                 'image' => $request->image,
                 'published_at' => $request->published_at?->format('Y-m-d') ?? null,
                 'slug' => $request->slug,
-                'author' => $request->user->name,
-                'category' => $request->category->name,
-                'tags' => $request->tags->implode(', ', 'name'),
+                'author' => $request->user,
+                'category' => $request->category,
+                'tags' => $request->tags,
             ]
         ];
     }
