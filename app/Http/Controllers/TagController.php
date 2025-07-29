@@ -31,6 +31,8 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
+        $tag->load('recipes');
+
         return new TagResource($tag);
     }
 
@@ -40,6 +42,8 @@ class TagController extends Controller
     public function update(TagUpdateRequest $request, Tag $tag)
     {
         $tag->update($request->validated());
+
+        $tag->load('recipes');
 
         return new TagResource($tag);
     }

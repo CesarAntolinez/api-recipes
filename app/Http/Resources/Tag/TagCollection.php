@@ -14,6 +14,14 @@ class TagCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return $this->collection->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'type' => 'tags',
+                'attributes' => [
+                    'name' => $item->name,
+                ]
+            ];
+        })->toArray();
     }
 }
