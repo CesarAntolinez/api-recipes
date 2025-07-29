@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Category;
 
+use App\Http\Resources\Recipe\RecipeCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +22,7 @@ class CategoryResource extends JsonResource
                 'name' => $request->name,
             ],
             'relationships' => [
-                'recipes' => $request->recipes,
+                'recipes' => new RecipeCollection($request->recipes),
             ]
         ];
     }
