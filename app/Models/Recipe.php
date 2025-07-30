@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 /**
  * Summary of Recipe
+ * @class Recipe
  * @package App\Models
  * @property int $int
  * @property string $title
@@ -60,7 +61,7 @@ class Recipe extends Model
      * Summary of user
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<User, Recipe>
      */
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -69,7 +70,7 @@ class Recipe extends Model
      * Summary of category
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<Category, Recipe>
      */
-    public function category()
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
@@ -78,7 +79,7 @@ class Recipe extends Model
      * Summary of tags
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany<Tag, Recipe>
      */
-    public function tags()
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }

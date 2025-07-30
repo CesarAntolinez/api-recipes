@@ -15,15 +15,14 @@ class TagResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        dd($request);
         return [
-            'id' => $request->id,
+            'id' => $this->id,
             'type' => 'tags',
             'attributes' => [
-                'name' => $request->name,
+                'name' => $this->name,
             ],
             'relationships' => [
-                'recipes' => new RecipeCollection($request->recipes),
+                'recipes' => new RecipeCollection($this->recipes),
             ]
         ];
     }

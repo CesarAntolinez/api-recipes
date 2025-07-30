@@ -16,13 +16,13 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $request->id,
+            'id' => $this->id,
             'type' => 'category',
             'attributes' => [
-                'name' => $request->name,
+                'name' => $this->name,
             ],
             'relationships' => [
-                'recipes' => new RecipeCollection($request->recipes),
+                'recipes' => new RecipeCollection($this->recipes),
             ]
         ];
     }
