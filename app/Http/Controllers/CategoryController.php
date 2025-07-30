@@ -10,6 +10,8 @@ class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return CategoryCollection
      */
     public function index()
     {
@@ -18,6 +20,9 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param CategoryStoreRequest $request
+     * @return CategoryResource
      */
     public function store(CategoryStoreRequest $request)
     {
@@ -28,6 +33,9 @@ class CategoryController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param Category $category
+     * @return CategoryResource
      */
     public function show(Category $category)
     {
@@ -38,16 +46,25 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param CategoryUpdateRequest $request
+     * @param Category $category
+     * @return CategoryResource
      */
     public function update(CategoryUpdateRequest $request, Category $category)
     {
         $category->update($request->validated());
+
+        $category->load('recipes');
 
         return new CategoryResource($category);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param Category $category
+     * @return bool|null
      */
     public function destroy(Category $category)
     {

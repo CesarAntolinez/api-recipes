@@ -10,6 +10,8 @@ class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return TagCollection
      */
     public function index()
     {
@@ -18,6 +20,9 @@ class TagController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param TagStoreRequest $request
+     * @return TagResource
      */
     public function store(TagStoreRequest $request)
     {
@@ -28,6 +33,9 @@ class TagController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param Tag $tag
+     * @return TagResource
      */
     public function show(Tag $tag)
     {
@@ -38,6 +46,10 @@ class TagController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param TagUpdateRequest $request
+     * @param Tag $tag
+     * @return TagResource
      */
     public function update(TagUpdateRequest $request, Tag $tag)
     {
@@ -50,6 +62,9 @@ class TagController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param Tag $tag
+     * @return bool|null
      */
     public function destroy(Tag $tag)
     {

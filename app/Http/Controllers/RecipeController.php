@@ -10,6 +10,8 @@ class RecipeController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return RecipeCollection
      */
     public function index()
     {
@@ -20,6 +22,9 @@ class RecipeController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param RecipeStoreRequest $request
+     * @return RecipeResource
      */
     public function store(RecipeStoreRequest $request)
     {
@@ -33,6 +38,9 @@ class RecipeController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param Recipe $recipe
+     * @return RecipeResource
      */
     public function show(Recipe $recipe)
     {
@@ -43,6 +51,10 @@ class RecipeController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param RecipeUpdateRequest $request
+     * @param Recipe $recipe
+     * @return RecipeResource
      */
     public function update(RecipeUpdateRequest $request, Recipe $recipe)
     {
@@ -56,6 +68,9 @@ class RecipeController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param Recipe $recipe
+     * @return bool|null
      */
     public function destroy(Recipe $recipe)
     {
