@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use App\Http\Requests\Recipe\{RecipeStoreRequest, RecipeUpdateRequest};
 use App\Http\Resources\Recipe\{RecipeCollection, RecipeResource};
 use App\Models\Recipe;
@@ -70,10 +71,12 @@ class RecipeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Recipe $recipe
-     * @return bool|null
+     * @return Response
      */
     public function destroy(Recipe $recipe)
     {
-        return $recipe->delete();
+        $recipe->delete();
+
+        return response()->noContent();
     }
 }

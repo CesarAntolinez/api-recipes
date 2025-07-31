@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Category\{CategoryStoreRequest, CategoryUpdateRequest};
 use App\Http\Resources\Category\{CategoryCollection, CategoryResource};
 use App\Models\Category;
+use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
@@ -64,10 +65,12 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Category $category
-     * @return bool|null
+     * @return Response
      */
     public function destroy(Category $category)
     {
-        return $category->delete();
+        $category->delete();
+
+        return response()->noContent();
     }
 }

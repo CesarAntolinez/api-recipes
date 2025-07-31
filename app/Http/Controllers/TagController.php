@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
 use App\Http\Requests\Tag\{TagStoreRequest, TagUpdateRequest};
 use App\Http\Resources\Tag\{TagCollection, TagResource};
 use App\Models\Tag;
@@ -64,10 +65,12 @@ class TagController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Tag $tag
-     * @return bool|null
+     * @return Response
      */
     public function destroy(Tag $tag)
     {
-        return $tag->delete();
+        $tag->delete();
+
+        return response()->noContent();
     }
 }
