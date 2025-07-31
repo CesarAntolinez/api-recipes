@@ -8,7 +8,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::group([/*'middleware' => ['auth:sanctum']*/], function() {
+Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('tags', App\Http\Controllers\TagController::class);
     Route::apiResource('recipes', App\Http\Controllers\RecipeController::class);
     Route::apiResource('categories', App\Http\Controllers\CategoryController::class);
