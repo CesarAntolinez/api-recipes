@@ -31,6 +31,6 @@ class LoginController extends Controller
                 'token_type' => 'bearer',
                 'access_token' => $token,
             ]
-        ]);
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
