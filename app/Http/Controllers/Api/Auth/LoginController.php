@@ -11,7 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 class LoginController extends Controller
 {
 
-    public function login(LoginRequest $request)
+    /**
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(LoginRequest $request): \Illuminate\Http\Response
     {
         $user = User::query()->firstWhere('email', $request->email);
 
