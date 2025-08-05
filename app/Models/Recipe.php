@@ -44,7 +44,6 @@ class Recipe extends Model
         'image',
         'published_at',
         'slug',
-        'user_id',
         'category_id'
     ];
 
