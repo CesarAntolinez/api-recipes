@@ -46,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    public function recipes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Recipe::class);
+    }
 }
