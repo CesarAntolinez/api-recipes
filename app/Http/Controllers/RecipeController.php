@@ -29,7 +29,7 @@ class RecipeController extends Controller
      */
     public function store(RecipeStoreRequest $request)
     {
-        $recipe = Recipe::create($request->validated());
+        $recipe = $request->user()->recipes()->create($request->validated());
 
         if ($request->exists('tags'))
             $recipe->tags()->attach($request->tags);
