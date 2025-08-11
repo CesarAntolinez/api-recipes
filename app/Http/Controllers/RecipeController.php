@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Response;
 use App\Http\Requests\Recipe\{RecipeStoreRequest, RecipeUpdateRequest};
 use App\Http\Resources\Recipe\{RecipeCollection, RecipeResource};
 use App\Models\Recipe;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Response;
 
 class RecipeController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      *
@@ -59,6 +61,8 @@ class RecipeController extends Controller
      */
     public function update(RecipeUpdateRequest $request, Recipe $recipe)
     {
+        $this->authorize('update', $recipe);
+
         $recipe->update($request->validated());
 
         if ($request->exists('tags'))
@@ -75,6 +79,8 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
+        $this->authorize('delete', $recipe);
+
         $recipe->delete();
 
         return response()->noContent();
