@@ -29,11 +29,18 @@ class RecipeUpdateRequest extends FormRequest
             'ingredients' => 'required|string',
             'preparation' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'published_at' => 'required|datetime',
-            'slug' => 'required|string',
+            'published_at' => 'nullable|datetime',
             'category_id' => 'required|exists:categories,id',
             'tags' => 'required|array',
             'tags.*' => 'required|exists:tags,id',
         ];
+    }
+
+    /** @return void */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('tags') && !is_array($this->tags)) {
+            $this->merge(['tags' => explode(',', $this->tags)]);
+        }
     }
 }

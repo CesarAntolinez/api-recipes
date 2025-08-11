@@ -36,6 +36,13 @@ class RecipeController extends Controller
         if ($request->exists('tags'))
             $recipe->tags()->attach($request->tags);
 
+        if ($request->hasFile('image')) {
+            $name = str()->slug($recipe->title) . '-' . time() . '.' . $request->file('image')->extension();
+            $recipe->image = $request->file('image')->storeAs('recipes', $name, 'public');
+
+            $recipe->save();
+        }
+
         return new RecipeResource($recipe);
     }
 
@@ -68,6 +75,16 @@ class RecipeController extends Controller
         if ($request->exists('tags'))
             $recipe->tags()->sync($request->tags);
 
+        if ($request->hasFile('image')) {
+            if (\Strage::disk('public')->exists($recipe->image))
+                \Strage::disk('public')->delete($recipe->image);
+
+            $name = str()->slug($recipe->title) . '-' . time() . '.' . $request->file('image')->extension();
+            $recipe->image = $request->file('image')->storeAs('recipes', $name, 'public');
+
+            $recipe->save();
+        }
+
         return new RecipeResource($recipe);
     }
 
@@ -81,6 +98,9 @@ class RecipeController extends Controller
     {
         $this->authorize('delete', $recipe);
 
+        if (\Strage::disk('public')->exists($recipe->image))
+            \Strage::disk('public')->delete($recipe->image);
+        
         $recipe->delete();
 
         return response()->noContent();
