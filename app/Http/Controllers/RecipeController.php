@@ -100,7 +100,7 @@ class RecipeController extends Controller
 
         if (\Strage::disk('public')->exists($recipe->image))
             \Strage::disk('public')->delete($recipe->image);
-        
+
         $recipe->delete();
 
         return response()->noContent();
