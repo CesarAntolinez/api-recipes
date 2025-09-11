@@ -7,7 +7,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'store']);
+Route::post('/login', [App\Http\Controllers\Api\Auth\LoginController::class, 'store'])
+    ->name('login');
 
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('tags', App\Http\Controllers\TagController::class);

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Response;
 use App\Http\Requests\Recipe\{RecipeStoreRequest, RecipeUpdateRequest};
 use App\Http\Resources\Recipe\{RecipeCollection, RecipeResource};
 use App\Models\Recipe;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Response;
 
 class RecipeController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      *
@@ -33,6 +35,13 @@ class RecipeController extends Controller
 
         if ($request->exists('tags'))
             $recipe->tags()->attach($request->tags);
+
+        if ($request->hasFile('image')) {
+            $name = str()->slug($recipe->title) . '-' . time() . '.' . $request->file('image')->extension();
+            $recipe->image = $request->file('image')->storeAs('recipes', $name, 'public');
+
+            $recipe->save();
+        }
 
         return new RecipeResource($recipe);
     }
@@ -59,10 +68,22 @@ class RecipeController extends Controller
      */
     public function update(RecipeUpdateRequest $request, Recipe $recipe)
     {
+        $this->authorize('update', $recipe);
+
         $recipe->update($request->validated());
 
         if ($request->exists('tags'))
             $recipe->tags()->sync($request->tags);
+
+        if ($request->hasFile('image')) {
+            if (\Strage::disk('public')->exists($recipe->image))
+                \Strage::disk('public')->delete($recipe->image);
+
+            $name = str()->slug($recipe->title) . '-' . time() . '.' . $request->file('image')->extension();
+            $recipe->image = $request->file('image')->storeAs('recipes', $name, 'public');
+
+            $recipe->save();
+        }
 
         return new RecipeResource($recipe);
     }
@@ -75,6 +96,11 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
+        $this->authorize('delete', $recipe);
+
+        if (\Strage::disk('public')->exists($recipe->image))
+            \Strage::disk('public')->delete($recipe->image);
+
         $recipe->delete();
 
         return response()->noContent();
