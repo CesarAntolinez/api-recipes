@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,8 +25,10 @@ class RecipeFactory extends Factory
             'preparation' => $this->faker->realText(),
             // 'image' => $this->faker,
             // 'published_at' => $this->faker->dateTime(),
-            'user_id' => $this->faker->numberBetween(1, 10),
-            'category_id' => $this->faker->numberBetween(1, 10),
+            //'user_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => User::query()->inRandomOrder()->first()->id,
+            //'category_id' => $this->faker->numberBetween(1, 10),
+            'category_id' => Category::query()->inRandomOrder()->first()->id,
         ];
     }
 }
