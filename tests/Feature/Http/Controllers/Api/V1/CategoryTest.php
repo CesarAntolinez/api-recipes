@@ -12,7 +12,7 @@ test('category index', function () {
 
     Category::factory(3)->create();
 
-    $response = $this->getJson('/api/categories');
+    $response = $this->getJson('/api/v1/categories');
 
     // $response->assertStatus(200);
     $response->assertJsonCount(3, 'data')
@@ -28,7 +28,7 @@ test('category show', function () {
 
     $category = Category::factory()->create();
 
-    $response = $this->get("/api/categories/$category->id");
+    $response = $this->get("/api/v1/categories/$category->id");
 
     $response->assertStatus(Response::HTTP_OK)
         ->assertJsonStructure([

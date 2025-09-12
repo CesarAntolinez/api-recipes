@@ -12,7 +12,7 @@ test('tag index', function () {
 
     Tag::factory(3)->create();
 
-    $response = $this->getJson('/api/tags');
+    $response = $this->getJson('/api/v1/tags');
 
     // $response->assertStatus(200);
     $response->assertJsonCount(3, 'data')
@@ -35,7 +35,7 @@ test('tag show', function () {
 
     $tag = Tag::factory()->create();
 
-    $response = $this->get("/api/tags/$tag->id");
+    $response = $this->get("/api/v1/tags/$tag->id");
 
     $response->assertStatus(Response::HTTP_OK)
         ->assertJsonStructure([

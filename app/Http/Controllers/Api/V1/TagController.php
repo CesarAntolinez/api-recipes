@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\{TagStoreRequest, TagUpdateRequest};
 use App\Http\Resources\Tag\{TagCollection, TagResource};
 use App\Models\Tag;
+use Illuminate\Http\Response;
 
 class TagController extends Controller
 {

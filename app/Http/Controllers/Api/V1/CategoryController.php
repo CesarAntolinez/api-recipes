@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\{CategoryStoreRequest, CategoryUpdateRequest};
 use App\Http\Resources\Category\{CategoryCollection, CategoryResource};
 use App\Models\Category;

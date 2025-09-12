@@ -14,7 +14,7 @@ test('recipes index', function () {
 
     $recipes = Recipe::factory(15)->create();
 
-    $response = $this->getJson('/api/recipes');
+    $response = $this->getJson('/api/v1/recipes');
 
     // $response->assertStatus(200);
     $response->assertJsonCount(15, 'data')
@@ -36,7 +36,7 @@ test('recipes show', function () {
 
     $recipe = Recipe::factory()->create();
 
-    $response = $this->get("/api/recipes/$recipe->id");
+    $response = $this->get("/api/v1/recipes/$recipe->id");
 
     $response->assertStatus(Response::HTTP_OK)
         ->assertJsonStructure([
@@ -54,7 +54,7 @@ test('recipes destroy', function () {
     Category::factory(10)->create();
 
     $recipe = Recipe::factory()->create();
-    $response = $this->deleteJson("/api/recipes/$recipe->id");
+    $response = $this->deleteJson("/api/v1/recipes/$recipe->id");
 
     $response->assertStatus(Response::HTTP_NO_CONTENT);
 });
@@ -75,7 +75,7 @@ test('recipes create', function () {
         'tags' => $tag->random(3)->pluck('id')->implode(','),
     ];
 
-    $response = $this->postJson("/api/recipes/", $data);
+    $response = $this->postJson("/api/v1/recipes/", $data);
 
     $response->assertStatus(Response::HTTP_CREATED)
         ->assertJsonStructure([
@@ -102,7 +102,7 @@ test('recipes update', function () {
         'preparation' => 'updated preparation',
     ];
 
-    $response = $this->putJson("/api/recipes/$recipe->id", $data);
+    $response = $this->putJson("/api/v1/recipes/$recipe->id", $data);
 
     $response->assertStatus(Response::HTTP_OK)
         ->assertJsonStructure([
