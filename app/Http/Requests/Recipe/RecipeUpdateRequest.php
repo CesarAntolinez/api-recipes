@@ -28,11 +28,11 @@ class RecipeUpdateRequest extends FormRequest
             'description' => 'required|string',
             'ingredients' => 'required|string',
             'preparation' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'published_at' => 'nullable|datetime',
-            'category_id' => 'required|exists:categories,id',
-            'tags' => 'required|array',
-            'tags.*' => 'required|exists:tags,id',
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|array',
+            'tags.*' => 'nullable|exists:tags,id',
         ];
     }
 

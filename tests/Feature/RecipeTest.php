@@ -59,12 +59,11 @@ test('recipes destroy', function () {
     $response->assertStatus(Response::HTTP_NO_CONTENT);
 });
 
-
 test('recipes create', function () {
     Sanctum::actingAs(User::factory()->create());
 
-    $category  = Category::factory()->create();
-    $tag  = Tag::factory(10)->create();
+    $category = Category::factory()->create();
+    $tag = Tag::factory(10)->create();
 
     $data = [
         'title' => fake()->sentence(),
@@ -86,4 +85,36 @@ test('recipes create', function () {
                 'attributes' => ['title', 'description']
             ],
         ]);
+});
+
+test('recipes update', function () {
+    Sanctum::actingAs(User::factory()->create());
+
+    $category = Category::factory(10)->create();
+
+    $recipe = Recipe::factory()->create();
+    //$tag  = Tag::factory(10)->create();
+
+    $data = [
+        'title' => 'updated title',
+        'description' => 'updated description',
+        'ingredients' => 'updated ingredients',
+        'preparation' => 'updated preparation',
+    ];
+
+    $response = $this->putJson("/api/recipes/$recipe->id", $data);
+
+    $response->assertStatus(Response::HTTP_OK)
+        ->assertJsonStructure([
+            'data' => [
+                'id',
+                'type',
+                'attributes' => ['title', 'description']
+            ],
+        ]);
+
+    $this->assertDatabaseHas('recipes', [
+        'title' => 'updated title',
+        'description' => 'updated description',
+    ]);
 });
