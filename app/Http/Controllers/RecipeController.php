@@ -98,8 +98,8 @@ class RecipeController extends Controller
     {
         $this->authorize('delete', $recipe);
 
-        if (\Strage::disk('public')->exists($recipe->image))
-            \Strage::disk('public')->delete($recipe->image);
+        if ($recipe->image && \Storage::disk('public')->exists($recipe->image))
+            \Storage::disk('public')->delete($recipe->image);
 
         $recipe->delete();
 

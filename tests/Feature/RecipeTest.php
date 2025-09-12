@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\{Category, Recipe, User};
+use App\Models\{Category, Recipe, Tag, User};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Laravel\Sanctum\Sanctum;
@@ -57,4 +57,33 @@ test('recipes destroy', function () {
     $response = $this->deleteJson("/api/recipes/$recipe->id");
 
     $response->assertStatus(Response::HTTP_NO_CONTENT);
+});
+
+
+test('recipes create', function () {
+    Sanctum::actingAs(User::factory()->create());
+
+    $category  = Category::factory()->create();
+    $tag  = Tag::factory(10)->create();
+
+    $data = [
+        'title' => fake()->sentence(),
+        'description' => fake()->paragraph(),
+        'ingredients' => fake()->realText(),
+        'preparation' => fake()->realText(),
+        'image' => \Illuminate\Http\UploadedFile::fake()->image('recipe.png'),
+        'category_id' => $category->id,
+        'tags' => $tag->random(3)->pluck('id')->implode(','),
+    ];
+
+    $response = $this->postJson("/api/recipes/", $data);
+
+    $response->assertStatus(Response::HTTP_CREATED)
+        ->assertJsonStructure([
+            'data' => [
+                'id',
+                'type',
+                'attributes' => ['title', 'description']
+            ],
+        ]);
 });
