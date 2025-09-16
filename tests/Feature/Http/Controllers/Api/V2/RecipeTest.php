@@ -2,6 +2,7 @@
 
 use App\Models\{Category, Recipe, User};
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Laravel\Sanctum\Sanctum;
 
 pest()->use(RefreshDatabase::class);
@@ -15,7 +16,8 @@ test('recipes index', function () {
 
     $response = $this->getJson('/api/v2/recipes');
 
-    $response->assertJsonCount(15, 'data')
+    $response->assertStatus(Response::HTTP_OK)
+        ->assertJsonCount(10, 'data')
         ->assertJsonStructure([
             'data' => [],
             'links' => [],
